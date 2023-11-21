@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 
 
 
-public class QuizGUI {
+public class QuizGUI{
 
 		JFrame frame = new JFrame();
 		JTextField textfield = new JTextField();
@@ -26,6 +26,7 @@ public class QuizGUI {
 		
 		//Buttons
 		JButton buttonA = new JButton();
+
 		JButton buttonB = new JButton();
 		JButton buttonC = new JButton();
 		JButton buttonD = new JButton();
@@ -56,22 +57,23 @@ public class QuizGUI {
 		JTextField leaderBoardSign = new JTextField();
 		JTextField average = new JTextField();
 
-		JTextField scoreDisplay = new JTextField();
 		JTextField[] leaderBoardFields = new JTextField[4];
 //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
 		Random rand = new Random(); 
 		Set<Integer> usedNumbers = new HashSet<>();
-	
-		public QuizGUI() {
 
-		
-		
-		
-		
-		
-		
+		String[] letters = {"A", "B", "C", "D"};
+
+
+
+
+
+
+
+
+	public QuizGUI() {
 		
 			
 			//Frame
@@ -100,23 +102,23 @@ public class QuizGUI {
 			textarea.setFont(new Font("MV Boli",Font.PLAIN,25));
 			textarea.setBorder(BorderFactory.createBevelBorder(1));
 			textarea.setEditable(false);
-			
-			
+
+
 			//Button A
 			buttonA.setBounds(0,270,100,100); //Size and location
 			buttonA.setFont(new Font("MV Boli",Font.BOLD,35)); //Font and text size
 			buttonA.setText("A"); //Text
-			
+
 			//Button B
 			buttonB.setBounds(0,400,100,100);//Size and location
 			buttonB.setFont(new Font("MV Boli",Font.BOLD,35)); //Font and text size
 			buttonB.setText("B"); //Text
-			
+
 			//Button C
 			buttonC.setBounds(0,530,100,100); //Size and location
 			buttonC.setFont(new Font("MV Boli",Font.BOLD,35)); //Font and size
 			buttonC.setText("C");//Text
-			
+
 			//Button D
 			buttonD.setBounds(0,660,100,100); //Size and location
 			buttonD.setFont(new Font("MV Boli",Font.BOLD,35)); //Font and text size
@@ -255,6 +257,7 @@ public class QuizGUI {
 			number_right.setBorder(BorderFactory.createBevelBorder(1)); //Border
 			number_right.setHorizontalAlignment(JTextField.CENTER); //Centre of box
 			number_right.setEditable(false); //Not editable
+			number_right.setVisible(false);
 
 
 			//Percentage
@@ -265,7 +268,14 @@ public class QuizGUI {
 			percentage.setBorder(BorderFactory.createBevelBorder(1)); //Border
 			percentage.setHorizontalAlignment(JTextField.CENTER); //Centre of box
 			percentage.setEditable(false); //Not editable
+			percentage.setVisible(false);
 
+
+
+
+
+			average = this.buildStatField(800, 750, 650, 100, paleGreen, darkBlue, statsFont);
+			standardDeviation = this.buildStatField(800, 850, 650, 100, paleGreen, darkBlue, statsFont);
 
 			/////////////////////////////////////////////xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 			
@@ -301,6 +311,12 @@ public class QuizGUI {
 			frame.add(buttonB);
 			frame.add(buttonC);
 			frame.add(buttonD);
+
+			//stats
+			frame.add(number_right);
+			frame.add(percentage);
+			frame.add(average);
+			frame.add(standardDeviation);
 			
 			//Visibility enabled
 			frame.setVisible(true);
@@ -334,6 +350,9 @@ public class QuizGUI {
 			answer_label5.setVisible(vis);
 		
 		}
+
+
+
 		public void setOptionButtonVisibility(boolean vis) {
 			buttonA.setVisible(vis);
 			buttonB.setVisible(vis);
@@ -370,6 +389,7 @@ public class QuizGUI {
 			answer_labelC.setVisible(false);;
 			answer_labelD.setVisible(false);
 		}
+
 
 
 	/**
@@ -409,6 +429,5 @@ public class QuizGUI {
 		return txtfield;
 	}
 
-
-	}
+}
 

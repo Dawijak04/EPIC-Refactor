@@ -8,6 +8,9 @@ public class Question {
 	private String answer4;
 	private int correctAnswer;
 	private Difficulty difficulty;
+	private QuestionType type;
+
+
 	
 	public Question(String question, String answer1, String answer2, String answer3, String answer4, int correctAnswer, Difficulty difficulty) {
 		this.question = question;
@@ -17,6 +20,16 @@ public class Question {
 		this.answer4 = answer4;
 		this.correctAnswer = correctAnswer;
 		this.difficulty = difficulty;
+		type = QuestionType.MultipleChoice;
+	}
+	
+	public Question(String question, int correctAnswer, Difficulty difficulty) {
+		this.question = question;
+		this.correctAnswer = correctAnswer;
+		this.answer1 = "True";
+		this.answer2 = "False";
+		this.difficulty = difficulty;
+		type = QuestionType.TrueOrFalse;
 	}
 
 	public String getQuestion() {
@@ -75,5 +88,7 @@ public class Question {
 		this.difficulty = difficulty;
 	}
 
-
+	public QuestionType getType() {
+		return type;
+	}
 }
