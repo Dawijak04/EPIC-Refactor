@@ -18,27 +18,23 @@ import java.util.Set;
 
 
 public class Quiz extends QuizGUI implements ActionListener{
-	
-	
-	//Quiz Bank 
-	QuizBank bank = new QuizBank();
+
 	java.util.List<Question> questionBank;
 	
 	
 	// Author: Victor - Account linked and score calculation attributes
 	private Logon accountsData;
 	private Account loggedAccount;
-	private int detailedScore = 0;
 	private CustomTimer gameTimer = new CustomTimer();
 	// END
-	
+
 	//private JTextField rankHighestScore; //GUI////////////////////////////////////////////////////////////
 	private JTextField standardDeviation;
 	private JTextField leaderBoardSign;
 	private JTextField average;
 	private JTextField scoreDisplay;
 	private JTextField[] leaderBoardFields = new JTextField[4];
-	
+
 	//Initialisation of variables
 	int answer;
 	int index;
@@ -48,71 +44,67 @@ public class Quiz extends QuizGUI implements ActionListener{
 	int result;
 	int mode;
 	int numberOfQuestions = 6;
-	String[] questions = bank.getQuestions(0);
-	String[][] potAnswers = bank.getPotAnswers(0);
-	int[] answers = bank.getAnswers(0);
-	
-	
+
+
+
 	//Used for random number generator
-	
-	
+
+
 	//QuizGUI GUI = new QuizGUI();
-	
+
 	public void run(Logon accountsData) {
-	
-		
+
+
 		// Author : Victor - Linking login and user accounts
 		this.accountsData= accountsData;
 		this.loggedAccount = this.accountsData.getLoggedAccount();
 		// END
-		
-	
-		
+
+
+
 		//End of quiz results
-	
+
+		//Color paleGreen = new Color(194,215,211);
+		//Color darkBlue = new Color(37,49,220);
+		//Font statsFont = new Font("Garamond",Font.BOLD,25);
+		//End of quiz results
 		Color paleGreen = new Color(194,215,211);
 		Color darkBlue = new Color(37,49,220);
 		Font statsFont = new Font("Garamond",Font.BOLD,25);
-	
-		
-		
-		// Author Victor - Stats/Leaderboards GUI/////////////////////////////////////////////////////////////////////////
-		
+		//Score
+
+
+
+
+		// Author Victor - Stats/Leaderboards GUI
+//wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 		this.leaderBoardSign = this.buildStatField(225);
 		this.leaderBoardSign.setBackground(paleGreen);
 		this.leaderBoardSign.setText("Leaderboard");
 		for (int j=0; j<4; j++) {
 			this.leaderBoardFields[j] = this.buildStatField(100 * (j + 3) + 25);
 		}
-		
+
 		this.leaderBoardFields[0].setForeground(new Color(212,175,55));
 		this.leaderBoardFields[1].setForeground(new Color(192, 192, 192));
 		this.leaderBoardFields[2].setForeground(new Color(169, 113, 66));
-		
-		//rankHighestScore = this.buildStatField(100 * 6);
-		this.scoreDisplay = new JTextField();
-		this.scoreDisplay.setVisible(false);
-		this.scoreDisplay.setBackground(new Color (25, 25, 25));
-		this.scoreDisplay.setForeground(new Color(255,255,255));
-		this.scoreDisplay.setBounds(1350, 0, 200, 100);
-		this.scoreDisplay.setFont(new Font("Garamond",Font.BOLD,22)); //Font and text size
-		this.scoreDisplay.setHorizontalAlignment(JTextField.CENTER);
-		this.scoreDisplay.setText("");
-		this.scoreDisplay.setVisible(true);
-		frame.add(this.scoreDisplay);
-		
+
+
 		average = this.buildStatField(800, 750, 650, 100, paleGreen, darkBlue, statsFont);
-		standardDeviation = this.buildStatField(800, 850, 650, 100, paleGreen, darkBlue, statsFont);////////////////////////////////////////////////////
+		standardDeviation = this.buildStatField(800, 850, 650, 100, paleGreen, darkBlue, statsFont);
 		/// END
-		
-		
-		
+
+//wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+
+
+
+
 		//Buttons
 		buttonA.addActionListener(this); //Takes user input
 		buttonB.addActionListener(this); //Takes user input
 		buttonC.addActionListener(this); //Takes user input
 		buttonD.addActionListener(this); //Takes user input
-		
+
 		//Button 1/Easy
 		button1.addActionListener(new ActionListener() { //Takes User input
 			@Override
@@ -134,7 +126,7 @@ public class Quiz extends QuizGUI implements ActionListener{
 
 			}
 		});
-		
+
 		//Button 2/Medium
 		button2.addActionListener(new ActionListener() { //Takes user input
 			@Override
@@ -148,7 +140,7 @@ public class Quiz extends QuizGUI implements ActionListener{
 				nextQuestion(); //Method is run, question appears
 			}
 		});
-		
+
 		//Button 3/Hard
 		button3.addActionListener(new ActionListener() { //Takes user input
 			@Override
@@ -162,15 +154,15 @@ public class Quiz extends QuizGUI implements ActionListener{
 				nextQuestion(); //Method is run, question appears
 			}
 		});
-		
-		//Button 4/Random  
+
+		//Button 4/Random
 		button4.addActionListener(new ActionListener() { //Takes user input
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				questionBank =  ReturnQuestionsByDifficulty.filterByDiff(Difficulty.All);
 				setLabelColour(20,255,240);
 				nextQuestion(); //Method is run, question appears
-				
+
 			}
 		});
 
@@ -180,47 +172,47 @@ public class Quiz extends QuizGUI implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 				mode = 5; //Assigns mode 5
 				//This mode begins with easy mode
-				
+
 				//questions = bank.getQuestions(mode);
 				//potAnswers = bank.getPotAnswers(mode);
 				//answers = bank.getAnswers(mode);
 				questionBank =  ReturnQuestionsByDifficulty.filterByDiff(Difficulty.Easy);
-				
+
 				setLabelColour(255,169,20);
 				nextQuestion(); //Method is run, question appears
 			}
 		});
-		
-		
-		
-		
+
+
+
+
 
 	}
 
 	public int randGenerate() {
 		usedNumbers.add(20); //Used to begin while loop
 		int localRand = 20; //Used to begin while loop
-		
+
 		while (usedNumbers.contains(localRand)) { //If chosen number was already used, another one is generated
 			localRand = rand.nextInt(questionBank.size()); //Random number is generated
 		}
-			usedNumbers.add(localRand);	//Generated number is added to list of used numbers
-			return localRand; //Random number is generated
+		usedNumbers.add(localRand);	//Generated number is added to list of used numbers
+		return localRand; //Random number is generated
 	}
-	
+
 	public void nextQuestion() {
-		
+
 		// Author Victor : updating the display of total points obtained so far
 		//this.scoreDisplay.setText(String.format("Score: %s", this.detailedScore));
 		// END
-		
-		
+
+
 		if(index >= numberOfQuestions) { //If end of quiz
 			results();   //Display results
 		}
 		else {
 			this.gameTimer.reset();
-			//Increasing difficulty mode 
+			//Increasing difficulty mode
 			if (mode == 5 ) {
 				if (incDifIndex == 2) { //Once 2 questions from easy category are asked, code moves to medium category of questions
 					//questions = bank.getQuestions(2);
@@ -234,19 +226,19 @@ public class Quiz extends QuizGUI implements ActionListener{
 					//answers = bank.getAnswers(3);
 					questionBank =  ReturnQuestionsByDifficulty.filterByDiff(Difficulty.Hard);
 				}
-				incDifIndex++; //Increment Increasing difficulty index 
+				incDifIndex++; //Increment Increasing difficulty index
 
 			}
-	
-			
-			randIndex = randGenerate(); //random number is generated and assigned 
+
+
+			randIndex = randGenerate(); //random number is generated and assigned
 			//Buttons and labels for modes are hidden
 			setDifficultyButtonVisibility(false);
-			
+
 			//Buttons for questions are shown
 			setOptionButtonVisibility(true);
-			
-			
+
+
 			textfield.setText("Questions " +(index + 1)); //Question number is displayed
 			textarea.setText(questionBank.get(randIndex).getQuestion()); //question is displayed
 			//Potential answers are displayed in labels
@@ -255,48 +247,33 @@ public class Quiz extends QuizGUI implements ActionListener{
 			answer_labelC.setText(questionBank.get(randIndex).getAnswer3());
 			answer_labelD.setText(questionBank.get(randIndex).getAnswer4());
 		}
-		
+
 	}
-	
-	
-	/**
-	 * Gets a question's difficulty by searching from which question bank it is from
-	 * @param question i.e. The question that we want to find the difficulty of.
-	 * @return The difficulty of the question represented by a string: "EASY" or "MEDIUM" or "HARD".
-	 * If the question wasn't found in any question bank, returns an empty string.
-	 */
-	public String getDifficulty(String question) {
-		
-		for (int i =1; i <= 3; i++) {
-			if (Utilities.searchString(question, bank.getQuestions(i))) {
-				return i == 1 ? "EASY" : i == 2 ? "MEDIUM" : "HARD";
-			}
-		}
-		return "";
-	}
-	///returning difficulty of the question. Used in next method
-	
+
+
+
+
 	/**
 	 * Calculates the amount of points obtained when answering correctly a question based on the time spent to answer and on the question's difficulty.
 	 * @return The amount of points obtained
-	 * 
+	 *
 	 * Author: Victor
 	 */ //channge get difficukty function
 	public int calculateDetailedScore() {
-		String difficulty = this.getDifficulty(questions[randIndex]);
+		Difficulty difficulty = questionBank.get(randIndex).getDifficulty();
 		int difficultyModifier = 1000;
 		int timeSpentOnQuestion = this.gameTimer.getTimeSeconds();
-		
-		if (difficulty.equals("MEDIUM")) {
+
+		if (difficulty == Difficulty.Medium) {
 			difficultyModifier /= 2;
 		}
-		else if (difficulty.equals("EASY")) {
+		else if (difficulty == Difficulty.Easy) {
 			difficultyModifier /= 4;
 		}
 		return (int) (difficultyModifier * Math.pow(0.9, timeSpentOnQuestion));
 	}
-	
-	public void actionPerformed(ActionEvent e) {
+
+	public void actionPerformed(ActionEvent e) { ///////////////////////////////////////////////////////////////////////
 		//All buttons are disabled
 		buttonA.setEnabled(false);
 		buttonB.setEnabled(false);
@@ -307,7 +284,7 @@ public class Quiz extends QuizGUI implements ActionListener{
 		button3.setEnabled(false);
 		button4.setEnabled(false);
 		button5.setEnabled(false);
-		
+
 		//Converting user input (via buttons) into an integer, stored in the variable "answer"
 		if(e.getSource()==buttonA) {
 			answer = 1;
@@ -326,27 +303,27 @@ public class Quiz extends QuizGUI implements ActionListener{
 			score++; //Increment score
 			detailedScore += this.calculateDetailedScore();
 		}
-		
+
 		displayAnswer(); //Correct answer is indicated
 	}
-	
-	public void displayAnswer() {
+
+	public void displayAnswer() { /////////////////////////////////////////////////////////////////////////////////////
 		//Buttons are disabled
 		buttonA.setEnabled(false);
 		buttonB.setEnabled(false);
 		buttonC.setEnabled(false);
 		buttonD.setEnabled(false);
-		
 
-		
+
+
 		//Timer, for 50 milliseconds break when answer is selected
 		Timer pause = new Timer(50,new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				//Buttons are enabled
-				buttonA.setEnabled(true);
+				buttonA.setEnabled(true); ////////////////////////////////////////////////////////////////////////////////
 				buttonB.setEnabled(true);
 				buttonC.setEnabled(true);
 				buttonD.setEnabled(true);
@@ -354,48 +331,49 @@ public class Quiz extends QuizGUI implements ActionListener{
 				nextQuestion(); //Move onto next question
 			}
 		});
-		
+
 		//1 second break
 		pause.setRepeats(false);
 		pause.start();
 	}
-	
+
 	public void results() {
 		hideDisableAll();
-		
+
 		result = (int)((score/(double)6)*100); //Result is calculated into a percentage
-		
+
 		textfield.setText("RESULTS"); //Heading 1 displays "RESULTS"
 		textarea.setText("Thank you for playing :)"); //Heading 2 displays "Thank you for playing :)"
 		textarea.setFont(new Font("Lucida Handwriting",Font.PLAIN,50));
-		
+
 		number_right.setText("Correct answers: " + score + "/6"); //Score out of 6 is displayed
 		percentage.setText("Percentage ratio: " + result + "%"); //Percentage result is displayed
-		
+
+
 		frame.add(number_right); //Score is added to frame
-		frame.add(percentage); //Percentage is added to frame 
-		
-		
-		
+		frame.add(percentage); //Percentage is added to frame
+
+
+
 		/// Author: Victor
 		if (!this.loggedAccount.getUsername().equals("guest")) {
-			this.loggedAccount.updateScore(this.detailedScore);
+			this.loggedAccount.updateScore(detailedScore);
 		}
-		
-		
+
+
+
 		this.buildStats();
 		this.leaderBoardSign.setVisible(true);
 		this.buildLeaderBoards();
-		
+
 		this.detailedScore = 0;
-		/// End
 	}
-	
-	
+
+
 	////////////////////////////////////////////////////////////////////////////////////////////////
-	
+
 	// Building the leaderboards / stats interface - Victor
-	
+
 	/**
 	 * Quickly initialise specific GUI elements (e.g. for leaderboards / stats)
 	 * Author: Victor
@@ -410,11 +388,11 @@ public class Quiz extends QuizGUI implements ActionListener{
 		txtfield.setHorizontalAlignment(JTextField.CENTER);
 		txtfield.setEditable(false);
 		txtfield.setVisible(false);
-		this.frame.add(txtfield);
+		frame.add(txtfield);
 		return txtfield;
 	}
-	
-	
+
+
 	/**
 	 * Quickly initialise specific GUI elements (e.g. for leaderboards / stats), higher flexibility version
 	 * Author: Victor
@@ -429,20 +407,21 @@ public class Quiz extends QuizGUI implements ActionListener{
 		txtfield.setHorizontalAlignment(JTextField.CENTER);
 		txtfield.setEditable(false);
 		txtfield.setVisible(false);
-		this.frame.add(txtfield);
+		frame.add(txtfield);
 		return txtfield;
 	}
-	
+
 
 	/**
 	 * Builds the stats related GUI elements
 	 */
 	public void buildStats() {
-		this.average.setText(String.format("Your average score: %s", this.loggedAccount.getMeanScore()));
-		this.average.setVisible(true);
-		this.standardDeviation.setText(String.format("Your score's deviation: %s", this.loggedAccount.getStandardDeviationScore()));
-		this.standardDeviation.setVisible(true);
-	}
+		average.setText(String.format("Your average score: %s", this.loggedAccount.getMeanScore()));
+		average.setVisible(true);
+		standardDeviation.setText(String.format("Your score's deviation: %s", this.loggedAccount.getStandardDeviationScore()));
+		standardDeviation.setVisible(true);
+	}private int detailedScore = 0;
+
 	
 	/**
 	 * Builds the GUI elements of the leaderboard
@@ -463,8 +442,8 @@ public class Quiz extends QuizGUI implements ActionListener{
 					break;
 				}
 			}
-			this.leaderBoardFields[i].setText(String.format("%s. %s: %s", rank, currentAccount.getUsername(), currentAccount.getHighestScore()));
-			this.leaderBoardFields[i].setVisible(true);
+			leaderBoardFields[i].setText(String.format("%s. %s: %s", rank, currentAccount.getUsername(), currentAccount.getHighestScore()));
+			leaderBoardFields[i].setVisible(true);
 		}
 	}
 }

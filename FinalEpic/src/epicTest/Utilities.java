@@ -15,21 +15,21 @@ public class Utilities {
 	 */
 	public static final String ACCOUNTS_PATH = "./data/accounts/";
 	
-	public static void displayAllElements(File[] sourceArray) {
-		for (File fileElement: sourceArray) {
-			System.out.println(fileElement.toString());
-		}
-	}
+	//public static void displayAllElements(File[] sourceArray) {
+		//for (File fileElement: sourceArray) {
+			//System.out.println(fileElement.toString());
+		//}
+	//}
 	
 	/**
 	 * Displays the elements of a String[] array in a readable format in the terminal
 	 * @param sourceArray i.e. the array that contains the elements we wish to display
 	 */
-	public static void displayAllElements(String[] sourceArray) {
-		for (String stringElement: sourceArray) {
-			System.out.println(stringElement);
-		}
-	}
+	//public static void displayAllElements(String[] sourceArray) {
+		//for (String stringElement: sourceArray) {
+			//System.out.println(stringElement);
+		//}
+	//}
 	
 	
 	

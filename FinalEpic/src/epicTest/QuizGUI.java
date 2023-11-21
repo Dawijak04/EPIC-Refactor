@@ -15,29 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import epicTest.QuizBank;
+
 
 public class QuizGUI {
-	//Quiz Bank 
-		QuizBank bank = new QuizBank();
-		
-		
-		//Initialisation of variables
-		int answer;
-		int index;
-		int randIndex;
-		int incDifIndex;
-		int score = 0;
-		int result;
-		int mode;
-		int numberOfQuestions = 6;
-		String[] questions = bank.getQuestions(0);
-		String[][] potAnswers = bank.getPotAnswers(0);
-		int[] answers = bank.getAnswers(0);
-		int easy = 1;
-		int medium = 2;
-		int hard = 3;
-		
+
 		JFrame frame = new JFrame();
 		JTextField textfield = new JTextField();
 		JTextField textfield2 = new JTextField();
@@ -68,7 +49,18 @@ public class QuizGUI {
 		//End result
 		JTextField number_right = new JTextField();
 		JTextField percentage = new JTextField();
-		
+
+
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+		JTextField standardDeviation = new JTextField();
+		JTextField leaderBoardSign = new JTextField();
+		JTextField average = new JTextField();
+
+		JTextField scoreDisplay = new JTextField();
+		JTextField[] leaderBoardFields = new JTextField[4];
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
 		Random rand = new Random(); 
 		Set<Integer> usedNumbers = new HashSet<>();
 	
@@ -133,47 +125,32 @@ public class QuizGUI {
 			//Answer label A
 			answer_labelA.setBounds(125, 270, 1600, 100); //Size and location
 			answer_labelA.setBackground(new Color(50,50,50)); //Background colour
-			answer_labelA.setForeground(new Color(25,255,0)); //Foreground colour
+			//answer_labelA.setForeground(new Color(25,255,0)); //Foreground colour
 			answer_labelA.setFont(new Font("Times New Roman",Font.PLAIN,35)); //Font and text size
 			
 			//Answer label B
 			answer_labelB.setBounds(125, 400, 1600, 100); //Size and location
 			answer_labelB.setBackground(new Color(50,50,50)); //Background colour
-			answer_labelB.setForeground(new Color(25,255,0)); //Background colour
+			//answer_labelB.setForeground(new Color(25,255,0)); //Background colour
 			answer_labelB.setFont(new Font("Times New Roman",Font.PLAIN,35)); //Font and text size
 			
 			//Answer label C
 			answer_labelC.setBounds(125, 530, 1600, 100); //Size and location
 			answer_labelC.setBackground(new Color(50,50,50)); //Background colour
-			answer_labelC.setForeground(new Color(25,255,0)); //Foreground colour
+			//answer_labelC.setForeground(new Color(25,255,0)); //Foreground colour
 			answer_labelC.setFont(new Font("Times New Roman",Font.PLAIN,35)); //Font and text size
 			
 			//Answer label D
 			answer_labelD.setBounds(125, 660, 1600, 100); //Size and location
 			answer_labelD.setBackground(new Color(50,50,50)); //Background colour
-			answer_labelD.setForeground(new Color(25,255,0)); //Foreground colour
+			//answer_labelD.setForeground(new Color(25,255,0)); //Foreground colour
 			answer_labelD.setFont(new Font("Times New Roman",Font.PLAIN,35)); //Font and text size
 			
 			
 			//End of quiz results
 			//Score
-			number_right.setBounds(625,300,400,200); //Location and size
-			number_right.setBackground(new Color(194,215,211)); //Background colour
-			number_right.setForeground(new Color(37,49,220)); //Foreground colour
-			number_right.setFont(new Font("Garamond",Font.BOLD,75)); //Font and text size
-			number_right.setBorder(BorderFactory.createBevelBorder(1)); //Border
-			number_right.setHorizontalAlignment(JTextField.CENTER); //Centre of box
-			number_right.setEditable(false); //Not editable
-			
 
-			//Percentage
-			percentage.setBounds(625,500,400,200); //Location and size
-			percentage.setBackground(new Color (194,215,211)); //Background colour
-			percentage.setForeground(new Color(37,49,220)); //Foreground colour
-			percentage.setFont(new Font("Garamond",Font.BOLD,75)); //Font and text size
-			percentage.setBorder(BorderFactory.createBevelBorder(1)); //Border
-			percentage.setHorizontalAlignment(JTextField.CENTER); //Centre of box
-			percentage.setEditable(false); //Not editable
+
 		
 			
 			//Buttons
@@ -246,7 +223,31 @@ public class QuizGUI {
 			Color paleGreen = new Color(194,215,211);
 			Color darkBlue = new Color(37,49,220);
 			Font statsFont = new Font("Garamond",Font.BOLD,25);
-			
+
+
+
+
+
+
+///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+			// Author Victor - Stats/Leaderboards GUI/////////////////////////////////////////////////////////////////////////
+
+			leaderBoardSign = buildStatField(225);
+			leaderBoardSign.setBackground(paleGreen);
+			leaderBoardSign.setText("Leaderboard");
+			for (int j=0; j<4; j++) { //////////////////////******************************************************************************************
+				leaderBoardFields[j] = buildStatField(100 * (j + 3) + 25);
+			}
+
+			leaderBoardFields[0].setForeground(new Color(212,175,55));
+			leaderBoardFields[1].setForeground(new Color(192, 192, 192));
+			leaderBoardFields[2].setForeground(new Color(169, 113, 66));
+
+
+
+			//average = buildStatField(800, 750, 650, 100, paleGreen, darkBlue, statsFont);
+			//standardDeviation = buildStatField(800, 850, 650, 100, paleGreen, darkBlue, statsFont);
+
 			number_right.setBounds(150,750,650,100); //Location and size
 			number_right.setBackground(new Color(194,215,211)); //Background colour
 			number_right.setForeground(new Color(37,49,220)); //Foreground colour
@@ -254,7 +255,7 @@ public class QuizGUI {
 			number_right.setBorder(BorderFactory.createBevelBorder(1)); //Border
 			number_right.setHorizontalAlignment(JTextField.CENTER); //Centre of box
 			number_right.setEditable(false); //Not editable
-			
+
 
 			//Percentage
 			percentage.setBounds(150, 850,650,100); //Location and size
@@ -264,11 +265,13 @@ public class QuizGUI {
 			percentage.setBorder(BorderFactory.createBevelBorder(1)); //Border
 			percentage.setHorizontalAlignment(JTextField.CENTER); //Centre of box
 			percentage.setEditable(false); //Not editable
-			
+
+
+			/////////////////////////////////////////////xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 			
 			//Everything is added to the frame 
 			//Headings
-			frame.add(textarea); 
+			frame.add(textarea);
 			frame.add(textfield); 
 			
 			
@@ -367,5 +370,45 @@ public class QuizGUI {
 			answer_labelC.setVisible(false);;
 			answer_labelD.setVisible(false);
 		}
+
+
+	/**
+	 * Quickly initialise specific GUI elements (e.g. for leaderboards / stats)
+	 * Author: Victor
+	 *///Rows on leaderboard
+	public JTextField buildStatField(int pos_y) {
+		JTextField txtfield = new JTextField();
+		txtfield.setBounds(0,pos_y,1600,100);
+		txtfield.setBackground(new Color(25,25,25));
+		txtfield.setForeground(new Color(37,49,220));
+		txtfield.setFont(new Font("Ink Free", Font.PLAIN,30));
+		txtfield.setBorder(BorderFactory.createBevelBorder(1));
+		txtfield.setHorizontalAlignment(JTextField.CENTER);
+		txtfield.setEditable(false);
+		txtfield.setVisible(false);
+		frame.add(txtfield);
+		return txtfield;
+	}
+
+
+	/**
+	 * Quickly initialise specific GUI elements (e.g. for leaderboards / stats), higher flexibility version
+	 * Author: Victor
+	 *////boxes on leaderboard
+	public JTextField buildStatField(int pos_x, int pos_y, int width, int height, Color bgColor, Color fgColor, Font font) {
+		JTextField txtfield = new JTextField();
+		txtfield.setBounds(pos_x,pos_y,width,height);
+		txtfield.setBackground(bgColor);
+		txtfield.setForeground(fgColor);
+		txtfield.setFont(font);
+		txtfield.setBorder(BorderFactory.createBevelBorder(1));
+		txtfield.setHorizontalAlignment(JTextField.CENTER);
+		txtfield.setEditable(false);
+		txtfield.setVisible(false);
+		frame.add(txtfield);
+		return txtfield;
+	}
+
+
 	}
 

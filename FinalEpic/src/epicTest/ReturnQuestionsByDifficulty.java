@@ -15,7 +15,7 @@ public class ReturnQuestionsByDifficulty {
         List<Question> questionBank = readCSV();
         List<Question> filtered = new ArrayList<>();
         for (Question q : questionBank) {
-            if (q.getdifficulty() == dif) {
+            if (q.getDifficulty() == dif) {
                 filtered.add(q);
             }
             else if (dif == Difficulty.All) {

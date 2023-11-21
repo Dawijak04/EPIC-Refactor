@@ -26,34 +26,34 @@ public class CustomTimer {
 		this.nanoDuration = (double) duration * Math.pow(10, 9);
 		this.initDuration = nanoDuration;
 		this.initialTime = System.nanoTime();
-		this.loops = -1;////////////////////////////////////////////////////////////
+		//this.loops = -1;////////////////////////////////////////////////////////////
 	}
 	
 	public CustomTimer() {
 		this.nanoDuration = 0;
 		this.initDuration = 0;
 		this.initialTime = System.nanoTime();
-		this.loops = -1;/////////////////////////////////////////
+		//this.loops = -1;/////////////////////////////////////////
 	}
 	
 	public void reset() {
 		// this.initialTime = System.nanoTime();
 		this.nanoDuration += initDuration;
-		this.loops--;///////////////////////////////////////////////////////
+		//this.loops--;///////////////////////////////////////////////////////
 	}
 	
 
 	public void reset(boolean decreaseLoops) {
 		// this.initialTime = System.nanoTime();
 		this.nanoDuration += initDuration;
-		if (decreaseLoops)////////////////////////////////////////////////////////
-			this.loops--;
+		//if (decreaseLoops)////////////////////////////////////////////////////////
+			//this.loops--;
 	}
 	
-	public void setDuration(double duration) {////////////////////////////////////////////////////////////////
-		this.initDuration = (double) duration * Math.pow(10, 9);
-		this.reset(false);
-	}
+	//public void setDuration(double duration) {////////////////////////////////////////////////////////////////
+		//this.initDuration = (double) duration * Math.pow(10, 9);
+		//this.reset(false);
+	//}
 	
 	public int getTimeMillis() {
 		return (int) (this.getCurrentTime() / Math.pow(10, 6));
@@ -68,13 +68,13 @@ public class CustomTimer {
 		return System.nanoTime() - this.initialTime;
 	}
 	
-	public boolean isReached() {///////////////////////////////////////////////////////////////////////////
-		if (this.loops != 0 && this.getCurrentTime() >= this.nanoDuration) {
-			this.reset();
+	//public boolean isReached() {///////////////////////////////////////////////////////////////////////////
+		//if (this.loops != 0 && this.getCurrentTime() >= this.nanoDuration) {
+			//this.reset();
 			//System.out.println("Timer : " + this.nanoDuration + " reached!");
-			return true;
-		}
-		return false;
-	}
+			//return true;
+		//}
+		//return false;
+	//}
 
 }

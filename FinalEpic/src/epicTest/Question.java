@@ -67,12 +67,13 @@ public class Question {
 		this.correctAnswer = correctAnswer;
 	}
 
-	public Difficulty getdifficulty() {
+	public Difficulty getDifficulty() {
 		return difficulty;
 	}
 
 	public void setdifficulty(Difficulty difficulty) {
 		this.difficulty = difficulty;
 	}
-	
+
+
 }
