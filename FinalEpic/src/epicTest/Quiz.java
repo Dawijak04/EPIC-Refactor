@@ -5,10 +5,10 @@ package epicTest;
 //GUI
 import java.awt.event.*;   
 import java.awt.*;
-import javax.swing.*;
 import java.awt.event.ActionListener;
-
-
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 
 public class Quiz extends QuizGUI implements ActionListener {
@@ -34,12 +34,14 @@ public class Quiz extends QuizGUI implements ActionListener {
 	int result;
 	int mode;
 	int numberOfQuestions = 6;
+	Random rand = new Random();
+	Set<Integer> usedNumbers = new HashSet<>();
 
 
-	//Used for random number generator
 
 
-	//QuizGUI GUI = new QuizGUI();
+
+
 
 	public void run(Logon accountsData) {
 
@@ -59,23 +61,19 @@ public class Quiz extends QuizGUI implements ActionListener {
 		Font statsFont = new Font("Garamond",Font.BOLD,25);
 		//Score
 
-
+		showDifficultyButtons(true);
 		// Author Victor - Stats/Leaderboards GUI
 //wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
-		/// END
+
 
 //wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
 
-		//Buttons
-		buttonA.addActionListener(this); //Takes user input
-		buttonB.addActionListener(this); //Takes user input
-		buttonC.addActionListener(this); //Takes user input
-		buttonD.addActionListener(this); //Takes user input
+
 
 		//Button 1/Easy
-		button1.addActionListener(new ActionListener() { //Takes User input
+		difficultyButtons[0].addActionListener(new ActionListener() { //Takes User input
 			@Override
 			public void actionPerformed(ActionEvent e) {
 //				//questions = bank.getQuestions(1); //Assigns easy questions
@@ -97,7 +95,7 @@ public class Quiz extends QuizGUI implements ActionListener {
 		});
 
 		//Button 2/Medium
-		button2.addActionListener(new ActionListener() { //Takes user input
+		difficultyButtons[1].addActionListener(new ActionListener() { //Takes user input
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//questions = bank.getQuestions(2);
@@ -111,7 +109,7 @@ public class Quiz extends QuizGUI implements ActionListener {
 		});
 
 		//Button 3/Hard
-		button3.addActionListener(new ActionListener() { //Takes user input
+		difficultyButtons[2].addActionListener(new ActionListener() { //Takes user input
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//questions = bank.getQuestions(3);
@@ -125,7 +123,7 @@ public class Quiz extends QuizGUI implements ActionListener {
 		});
 
 		//Button 4/Random
-		button4.addActionListener(new ActionListener() { //Takes user input
+		difficultyButtons[3].addActionListener(new ActionListener() { //Takes user input
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.All);
@@ -136,7 +134,7 @@ public class Quiz extends QuizGUI implements ActionListener {
 		});
 
 		//Button 5/Increasing Difficulty  !This method continues later in the code!
-		button5.addActionListener(new ActionListener() { //Takes user input
+		difficultyButtons[4].addActionListener(new ActionListener() { //Takes user input
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mode = 5; //Assigns mode 5
@@ -153,6 +151,7 @@ public class Quiz extends QuizGUI implements ActionListener {
 		});
 
 
+
 	}
 
 	public int randGenerate() {
@@ -167,10 +166,10 @@ public class Quiz extends QuizGUI implements ActionListener {
 	}
 
 	public void nextQuestion() {
-
-		// Author Victor : updating the display of total points obtained so far
-		//this.scoreDisplay.setText(String.format("Score: %s", this.detailedScore));
-		// END
+		enableDifficultyButtons(false);
+		showDifficultyButtons(false);
+		enableOptionButtons(true);
+		showOptionButtons(true);
 
 
 		if (index >= numberOfQuestions) { //If end of quiz
@@ -206,10 +205,10 @@ public class Quiz extends QuizGUI implements ActionListener {
 			//System.out.println(questionBank.get(randIndex).getDifficulty());
 
 			//Buttons and labels for modes are hidden
-			setDifficultyButtonVisibility(false);
+
 
 			//Buttons for questions are shown
-			setOptionButtonVisibility(true);
+			showOptionButtons(true);
 
 
 			textfield.setText("Questions " + (index + 1)); //Question number is displayed
@@ -217,30 +216,33 @@ public class Quiz extends QuizGUI implements ActionListener {
 
 
 			if (questionBank.get(randIndex).getType() == QuestionType.TrueOrFalse) {
-				answer_labelB.setText(questionBank.get(randIndex).getAnswer1());
-				answer_labelC.setText(questionBank.get(randIndex).getAnswer2());
-				buttonA.setVisible(false);
-				buttonD.setVisible(false);
-				buttonA.setEnabled(false);
-				buttonA.setEnabled(false);
-				answer_labelA.setVisible(false);
-				answer_labelD.setVisible(false);
+				optionLabels[1].setText(questionBank.get(randIndex).getAnswer1());
+				optionLabels[2].setText(questionBank.get(randIndex).getAnswer2());
+				optionButtons[0].setVisible(false);
+				optionButtons[3].setVisible(false);
+				optionButtons[0].setEnabled(false);
+				optionButtons[3].setEnabled(false);
+				optionLabels[0].setVisible(false);
+				optionLabels[3].setVisible(false);
 			} else if (questionBank.get(randIndex).getType() == QuestionType.MultipleChoice) {
-				answer_labelA.setText(questionBank.get(randIndex).getAnswer1());
-				answer_labelB.setText(questionBank.get(randIndex).getAnswer2());
-				answer_labelC.setText(questionBank.get(randIndex).getAnswer3());
-				answer_labelD.setText(questionBank.get(randIndex).getAnswer4());
-				buttonA.setVisible(true);
-				buttonD.setVisible(true);
-				buttonA.setEnabled(true);
-				buttonA.setEnabled(true);
-				answer_labelA.setVisible(true);
-				answer_labelD.setVisible(true);
+				optionLabels[0].setText(questionBank.get(randIndex).getAnswer1());
+				optionLabels[1].setText(questionBank.get(randIndex).getAnswer2());
+				optionLabels[2].setText(questionBank.get(randIndex).getAnswer3());
+				optionLabels[3].setText(questionBank.get(randIndex).getAnswer4());
+				optionButtons[0].setVisible(true);
+				optionButtons[3].setVisible(true);
+				optionButtons[0].setEnabled(true);
+				optionButtons[3].setEnabled(true);
+				optionLabels[0].setVisible(true);
+				optionLabels[3].setVisible(true);
+
+
 			}
 
 	}
 
 }
+
 
 
 
@@ -266,28 +268,19 @@ public class Quiz extends QuizGUI implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) { ///////////////////////////////////////////////////////////////////////
-		//All buttons are disabled
-		buttonA.setEnabled(false);
-		buttonB.setEnabled(false);
-		buttonC.setEnabled(false);
-		buttonD.setEnabled(false);
-		button1.setEnabled(false);
-		button2.setEnabled(false);
-		button3.setEnabled(false);
-		button4.setEnabled(false);
-		button5.setEnabled(false);
+		enableOptionButtons(false);
 
 		//Converting user input (via buttons) into an integer, stored in the variable "answer"
-		if(e.getSource()==buttonA) {
+		if(e.getSource()==optionButtons[0]) {
 			answer = 1;
 		}
-		if(e.getSource()==buttonB) {
+		if(e.getSource()==optionButtons[1]) {
 			answer = 2;
 		}
-		if(e.getSource()==buttonC) {
+		if(e.getSource()==optionButtons[2]) {
 			answer = 3;
 		}
-		if(e.getSource()==buttonD) {
+		if(e.getSource()==optionButtons[3]) {
 			answer = 4;
 
 		}
@@ -297,42 +290,15 @@ public class Quiz extends QuizGUI implements ActionListener {
 			//System.out.println("Correct");
 		}
 		//else System.out.println("Incorrect");
-
-		displayAnswer(); //Correct answer is indicated
+		index++;
+		nextQuestion(); //Correct answer is indicated
 	}
 
-	public void displayAnswer() { /////////////////////////////////////////////////////////////////////////////////////
-		//Buttons are disabled
-		buttonA.setEnabled(false);
-		buttonB.setEnabled(false);
-		buttonC.setEnabled(false);
-		buttonD.setEnabled(false);
 
-
-
-		//Timer, for 50 milliseconds break when answer is selected
-		Timer pause = new Timer(50,new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				//Buttons are enabled
-				buttonA.setEnabled(true); ////////////////////////////////////////////////////////////////////////////////
-				buttonB.setEnabled(true);
-				buttonC.setEnabled(true);
-				buttonD.setEnabled(true);
-				index++; //Increment index
-				nextQuestion(); //Move onto next question
-			}
-		});
-
-		//1 second break
-		pause.setRepeats(false);
-		pause.start();
-	}
 
 	public void results() {
-		hideDisableAll();
+		enableOptionButtons(false);
+		showOptionButtons(false);
 
 		result = (int)((score/(double)6)*100); //Result is calculated into a percentage
 

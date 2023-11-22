@@ -27,6 +27,7 @@ public class Account {
 	private ArrayList<Double> allScoresAchieved;
 
 
+	//Constructor for account object
 	public Account(String username, String password, ArrayList<Double> scoreData) {
 		this.username = username;
 		this.password = password;
