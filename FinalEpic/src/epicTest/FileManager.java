@@ -28,37 +28,9 @@ public class FileManager {
 		try {
 			File file = new File(filepath);
 			
-			if (file.createNewFile()) {
-				//System.out.println(filepath + " has successfully been created.");
-			}
-			else {
+			if (!file.createNewFile()) {
+
 				System.out.println(filepath + " already exists!");
-			}
-		}
-		
-		catch (IOException e) {
-			System.out.println("Error: file couldn't be created");
-			e.printStackTrace();
-		}
-		
-	}
-	
-	/**
-	 * Creates an empty file at the specified path. Possibility to specify the file extension as the second parameter if necessary.
-	 * @param filepath i.e. the path of the new file to be created
-	 * @param fileExtension i.e. the extension of the newly created file
-	 */
-	public static void createFile(String filepath, String fileExtension) {//creates accounts files//?????????????????????????
-		// Creates a new file at the specified path if file doesn't already exist.
-		try {
-			String completeFilename = filepath + "." + fileExtension;
-			File file = new File(completeFilename);
-			
-			if (file.createNewFile()) {
-				// System.out.println(completeFilename + " has successfully been created.");
-			}
-			else {
-				System.out.println(completeFilename + " already exists!");
 			}
 		}
 		
@@ -76,7 +48,6 @@ public class FileManager {
 	 */
 	public static File[] lsDirectory(String directoryPath) {//finds location of account file
 		File directory = new File(directoryPath);
-		// System.out.println(directory.getAbsolutePath());
 		if (directory.exists() && directory.isDirectory()) {
 			return directory.listFiles();
 		}
@@ -87,76 +58,7 @@ public class FileManager {
 			return null;
 		}
 	}
-	
-	/**
-	 * Reads the content of a file and returns it as a string. WARNING: by default, line jumps (i.e. \n) are not included in the finally returned string.
-	 * To fix this, please set includeLineJumps parameter to true.
-	 * @param filepath i.e. the path of the file to be read
-	 * @param includeLineJumps i.e. deciding whether line jumps should be included in the returned string
-	 * @return The content of the file represented as a string.
-	 */
-	public static String readFile(String filepath) {//???????????????????????????????????????????????????????
-		// Returns the content of a file as a string
-		// WARNING: special characters such as \n (=new line) may not be recognized!!!
-		String fileContent = "";
-		try {
-			File file = new File(filepath);
-			Scanner reader = new Scanner(file);
-			while (reader.hasNextLine()) {
-				String line = reader.nextLine();
-				System.out.println(line);
-				fileContent += line;
-			}
-			reader.close();
-		}
-		
-		catch (IOException e) {
-			System.out.println("Error: file couldn't be created");
-			e.printStackTrace();
-		}
-		return fileContent;
-	}
-	
-	
-	/**
-	 * Reads the content of a file and returns it as a string. WARNING: by default, line jumps (i.e. \n) are not included in the finally returned string.
-	 * To fix this, please set includeLineJumps parameter to true.
-	 * @param filepath i.e. the path of the file to be read
-	 * @param includeLineJumps i.e. deciding whether line jumps should be included in the returned string
-	 * @return The content of the file represented as a string.
-	 */
-	public static String readFile(String filepath, boolean includeLineJumps) {//?????????????????????????????????????????????????????????
-		// Returns the content of a file as a string
-		// WARNING: special characters such as \n (=new line) may not be recognized!!!
-		String fileContent = "";
-		String line;
-		try {
-			File file = new File(filepath);
 
-			Scanner reader = new Scanner(file);
-			while (reader.hasNextLine()) {
-				if (includeLineJumps)	{
-					line = reader.next();
-				}
-				
-				else {
-					line = reader.nextLine();
-				}
-				// System.out.println(line);
-				fileContent += line;
-			}
-			reader.close();
-		}
-		
-		catch (IOException e) {
-			System.out.println("Error: file couldn't be created");
-			e.printStackTrace();
-		}
-		return fileContent;
-	}
-	
-	
-	
 	/**
 	 * Clears the 4 last characters of a string so that the .txt extension disappears.
 	 * Example: clearTxtExtension("hello.txt") -> "hello"
@@ -215,7 +117,6 @@ public class FileManager {
 				FileWriter writer = new FileWriter(openedFile, true);
 				BufferedWriter adaptedWriter = new BufferedWriter(writer);
 				adaptedWriter.write(content);
-				//writer.close();
 				adaptedWriter.close();
 			}
 			else {

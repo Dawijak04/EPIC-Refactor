@@ -12,8 +12,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 
-
-
 public class QuizGUI{
 //Initializing GUI components
 
@@ -100,7 +98,6 @@ public class QuizGUI{
 	}
 
 
-
 	public JTextField buildStatField(int pos_x, int pos_y, int width, int height) { //creates boxes to display statistics/results at the end of the game
 		JTextField txtfield = new JTextField();
 		txtfield.setBounds(pos_x,pos_y,width,height);
@@ -116,8 +113,6 @@ public class QuizGUI{
 	}
 
 	public QuizGUI() {
-		
-			
 			//Frame
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setSize(1600,1000);
@@ -125,9 +120,6 @@ public class QuizGUI{
 			frame.setLayout(null);
 			frame.setResizable(false);
 			frame.setVisible(true);
-			
-
-
 
 
 		//Buttons/Labels displaying game modes
@@ -151,22 +143,24 @@ public class QuizGUI{
 		}
 
 			//Unique colours are assigned to each difficulty label and podium places
-			answerLabels[0].setForeground(new Color(25,255,0)); //Foreground colour: Green
-			answerLabels[1].setForeground(new Color(255,240,20)); //Foreground colour: Yellow
-			answerLabels[2].setForeground(new Color(255,44,20)); //Foreground colour: Red
-			answerLabels[3].setForeground(new Color(20,255,240)); //Foreground colour: Cyan
-			answerLabels[4].setForeground(new Color(255,169,20)); //Foreground colour: Orange
-			leaderBoardFields[0].setForeground(new Color(212,175,55)); //Foreground colour: Gold
-			leaderBoardFields[1].setForeground(new Color(192, 192, 192)); //Foreground colour: Silver
-			leaderBoardFields[2].setForeground(new Color(169, 113, 66)); //Foreground colour:Bronze
+		answerLabels[0].setForeground(new Color(25,255,0)); //Foreground colour: Green
+		answerLabels[1].setForeground(new Color(255,240,20)); //Foreground colour: Yellow
+		answerLabels[2].setForeground(new Color(255,44,20)); //Foreground colour: Red
+		answerLabels[3].setForeground(new Color(20,255,240)); //Foreground colour: Cyan
+		answerLabels[4].setForeground(new Color(255,169,20)); //Foreground colour: Orange
+		leaderBoardFields[0].setForeground(new Color(212,175,55)); //Foreground colour: Gold
+		leaderBoardFields[1].setForeground(new Color(192, 192, 192)); //Foreground colour: Silver
+		leaderBoardFields[2].setForeground(new Color(169, 113, 66)); //Foreground colour:Bronze
 
 
-			number_right = this.buildStatField(150, 750, 650, 100);
-			percentage = this.buildStatField(150,850,650,100);
-			average = this.buildStatField(800, 750, 650, 100);
-			standardDeviation = this.buildStatField(800, 850, 650, 100);
-		showOptionButtons(false);
+		//build GUI components for statistics
+		number_right = this.buildStatField(150, 750, 650, 100);
+		percentage = this.buildStatField(150,850,650,100);
+		average = this.buildStatField(800, 750, 650, 100);
+		standardDeviation = this.buildStatField(800, 850, 650, 100);
 
+
+		showOptionButtons(false); //option buttons are hidden
 
 		//Title banner/Heading 1
 		textfield.setBounds(0,0,1600,100);
@@ -192,38 +186,35 @@ public class QuizGUI{
 		textarea.setText("Select difficulty"); //Heading 2
 		frame.add(textarea);
 
-
+		//title banner and question banner are shown
 		textfield.setVisible(true);
 		textarea.setVisible(true);
 
-			//Buttons and labels for questions are disabled/hidden
-
-
 }
-		//Methods used to change visibility and ability of buttons/labels
-		public void showDifficultyButtons(boolean vis) { //buttons/labels used to choose difficulty
+
+		public void showDifficultyButtons(boolean vis) { //visibility difficulty buttons and labels
 			for (int i = 0; i < 5; i++) {
 				difficultyButtons[i].setVisible(vis);
 				answerLabels[i].setVisible(vis);
 			}
 		}
-		public void enableDifficultyButtons(boolean x) {
+		public void enableDifficultyButtons(boolean x) {  //difficulty buttons can be enabled or disabled
 			for(int i = 0; i < 5; i++) {
 				difficultyButtons[i].setEnabled(x);
 			}
 		}
-		public void setLabelColour(int a, int b, int c) {
+		public void setLabelColour(int a, int b, int c) { //option labels set to specific colour
 			for(int i = 0; i < 4; i++) {
 				optionLabels[i].setForeground(new Color(a, b, c));
 			}
 		}
-		public void enableOptionButtons(boolean x) {
+		public void enableOptionButtons(boolean x) { //option buttons can be enabled or disabled
 			//Buttons are disabled
 			for (int i = 0; i < 4; i++) {
 				optionButtons[i].setEnabled(x);
 			}
 		}
-		public void showOptionButtons(boolean vis) {
+		public void showOptionButtons(boolean vis) { //visibility for option buttons and labels
 			for (int i = 0; i < 4; i++) {
 				optionButtons[i].setVisible(vis);
 				optionLabels[i].setVisible(vis);
