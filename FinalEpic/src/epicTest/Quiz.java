@@ -15,7 +15,7 @@ import java.util.Set;
 public class Quiz extends QuizGUI implements ActionListener {
 
 	//List of questions
-	java.util.List<Question> questionBank;
+	private java.util.List<Question> questionBank;
 
 	//Accounts data
 	private Logon accountsData;
@@ -29,18 +29,18 @@ public class Quiz extends QuizGUI implements ActionListener {
 
 
 	//Initialisation of variables
-	int answer; //user input answer
-	int index; //index of question out of 6
-	int randIndex; //random number used for picking a question
-	int incDifIndex; //used for increasing difficulty mode.Switches difficulties once 2 questions of one more are asked
-	int score = 0; //score
-	int result; //used for calculating percentage of score
-	int mode; //used for the program to recognize if increasing difficulty mode is activated
-	int numberOfQuestions = 6; //limit of questions asked
+	private int answer; //user input answer
+	private int index; //index of question out of 6
+	private int randIndex; //random number used for picking a question
+	private int incDifIndex; //used for increasing difficulty mode.Switches difficulties once 2 questions of one more are asked
+	private int score = 0; //score
+	private int result; //used for calculating percentage of score
+	private int mode; //used for the program to recognize if increasing difficulty mode is activated
+	private int numberOfQuestions = 6; //limit of questions asked
 
 	//Used for random number generator
-	Random rand = new Random();
-	Set<Integer> usedNumbers = new HashSet<>();
+	private Random rand = new Random();
+	private Set<Integer> usedNumbers = new HashSet<>();
 
 
 
@@ -51,9 +51,15 @@ public class Quiz extends QuizGUI implements ActionListener {
 	public void run(Logon accountsData) {
 		//appropriate account is found
 		this.accountsData = accountsData;
-		this.loggedAccount = this.accountsData.getLoggedAccount();
+		loggedAccount = this.accountsData.getLoggedAccount();
 
 		showDifficultyButtons(true);//difficulty buttons are displayed
+		index = 0;
+		score = 0;
+		incDifIndex = 0;
+		mode = 0;
+		result = 0;
+		usedNumbers.clear();
 
 
 		//Button 1/Easy
@@ -155,36 +161,23 @@ public class Quiz extends QuizGUI implements ActionListener {
 			if (questionBank.get(randIndex).getType() == QuestionType.TrueOrFalse) {
 				optionLabels[1].setText(questionBank.get(randIndex).getAnswer1());
 				optionLabels[2].setText(questionBank.get(randIndex).getAnswer2());
-				optionButtons[0].setVisible(false);
-				optionButtons[3].setVisible(false);
-				optionButtons[0].setEnabled(false);
-				optionButtons[3].setEnabled(false);
-				optionLabels[0].setVisible(false);
-				optionLabels[3].setVisible(false);
+				trueOrFalseQuestionButtons();
 			} else if (questionBank.get(randIndex).getType() == QuestionType.MultipleChoice) {
 				optionLabels[0].setText(questionBank.get(randIndex).getAnswer1());
 				optionLabels[1].setText(questionBank.get(randIndex).getAnswer2());
 				optionLabels[2].setText(questionBank.get(randIndex).getAnswer3());
 				optionLabels[3].setText(questionBank.get(randIndex).getAnswer4());
-				optionButtons[0].setVisible(true);
-				optionButtons[3].setVisible(true);
-				optionButtons[0].setEnabled(true);
-				optionButtons[3].setEnabled(true);
-				optionLabels[0].setVisible(true);
-				optionLabels[3].setVisible(true);
+				multipleChoiceQuestionButtons();
 			}
 	}
 }
-
-
-
 
 
 	//calculates the points a user gets for a specific question by taking into account the time spent on the question, the difficulty and users input
 	public int calculateDetailedScore() {
 		Difficulty difficulty = questionBank.get(randIndex).getDifficulty(); //gets the difficulty of the current question
 		int difficultyModifier = 1000;
-		int timeSpentOnQuestion = this.gameTimer.getTimeSeconds(); //time spent on question
+		int timeSpentOnQuestion = gameTimer.getTimeSeconds(); //time spent on question
 
 		if (difficulty == Difficulty.Medium) {
 			difficultyModifier /= 2; //points are divided by 2 if in medium mode
@@ -212,7 +205,7 @@ public class Quiz extends QuizGUI implements ActionListener {
 		}
 		if(questionBank.get(randIndex).getCorrectAnswer() == answer) { //If correct answer
 			score++; //Increment score
-			detailedScore += this.calculateDetailedScore();
+			detailedScore += calculateDetailedScore();
 		}
 		index++; //index is incremented
 		nextQuestion(); //Correct answer is indicated
@@ -234,15 +227,25 @@ public class Quiz extends QuizGUI implements ActionListener {
 		frame.add(standardDeviation); //standard deviation is added to frame
 
 
-		if (!this.loggedAccount.getUsername().equals("guest")) { //if user is logged into an account
-			this.loggedAccount.updateScore(detailedScore); //score is saved into their accounts file
+		if (!loggedAccount.getUsername().equals("guest")) { //if user is logged into an account
+			loggedAccount.updateScore(detailedScore); //score is saved into their accounts file
 		}
 
-		this.buildStats(); //stat data is set to GUI components to be displayed for the user
-		this.leaderBoardSign.setVisible(true); //Leaderboard sign is shown
-		this.buildLeaderBoards(); //podium is set
+		buildStats(); //stat data is set to GUI components to be displayed for the user
+		leaderBoardSign.setVisible(true); //Leaderboard sign is shown
+		buildLeaderBoards(); //podium is set
 
-		this.detailedScore = 0;
+		detailedScore = 0;
+
+		restartButton.setVisible(true);
+		restartButton.setEnabled(true);
+		restartButton.addActionListener(new ActionListener() { //Takes user input
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				startQuizSettings();
+				run(Logon.getUser());
+			}
+		});
 	}
 
 	/**
@@ -253,9 +256,9 @@ public class Quiz extends QuizGUI implements ActionListener {
 		number_right.setVisible(true);
 		percentage.setText("Percentage ratio: " + result + "%"); //Percentage result is displayed
 		percentage.setVisible(true);
-		average.setText(String.format("Your average score: %s", this.loggedAccount.getMeanScore())); //Average score of account is displayed (Shows null if logged in as guest)
+		average.setText(String.format("Your average score: %s", loggedAccount.getMeanScore())); //Average score of account is displayed (Shows null if logged in as guest)
 		average.setVisible(true);
-		standardDeviation.setText(String.format("Your score's deviation: %s", this.loggedAccount.getStandardDeviationScore())); //Standard deviation is displayed (Shows null if logged in as guest)1
+		standardDeviation.setText(String.format("Your score's deviation: %s", loggedAccount.getStandardDeviationScore())); //Standard deviation is displayed (Shows null if logged in as guest)1
 		standardDeviation.setVisible(true);
 	}private int detailedScore = 0;
 
@@ -264,7 +267,7 @@ public class Quiz extends QuizGUI implements ActionListener {
 	 * Builds the GUI elements of the leaderboard
 	 *///sets texts to leaderboard accounts
 	public void buildLeaderBoards() {
-		Account[] podium = this.accountsData.getPodium(); //array of podium accounts
+		Account[] podium = accountsData.getPodium(); //array of podium accounts
 		Account currentAccount;
 		int rank;
 		for (int i=0; i < 4; i++) {
@@ -273,8 +276,8 @@ public class Quiz extends QuizGUI implements ActionListener {
 				rank = i + 1;
 			}
 			else {
-				currentAccount = this.loggedAccount;
-				rank = this.accountsData.getRank(currentAccount);
+				currentAccount = loggedAccount;
+				rank = accountsData.getRank(currentAccount);
 				if (rank <= 3) {
 					break;
 				}

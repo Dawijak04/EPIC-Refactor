@@ -17,6 +17,14 @@ public class Logon {
 	private Account loggedAccount;
 	
 	private static String CHOOSE_LOGIN_REGEX = Utilities.generateSimpleRegex("123");
+	private static Logon user;
+
+	public static void setUser(Logon Account) {
+		user = Account;
+	}
+	public static Logon getUser() {
+		return user;
+	}
 
 	
 	/**

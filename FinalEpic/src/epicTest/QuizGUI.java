@@ -23,6 +23,7 @@ public class QuizGUI{
 		//Buttons
 		JButton[] difficultyButtons = new JButton[5];
 		JButton[] optionButtons = new JButton[4];
+		JButton restartButton = new JButton();
 
 		
 		//Answer labels
@@ -54,6 +55,15 @@ public class QuizGUI{
 		frame.add(button);
 		return button;
 	}
+	public JButton initializeButton(JButton button, int y, String text) { //creates buttons to choose an answer option
+		button = new JButton();
+		button.setFont(new Font("MV Boli", Font.BOLD, 35));
+		button.setBounds(0, (270 + (130 * y)), 100, 100);
+		button.setText(text);
+		button.addActionListener((ActionListener) this);
+		frame.add(button);
+		return button;
+	}
 
 	public JLabel initializeLabel(JLabel label, int y, String text) { //creates labels describing the difficulty of the game
 		label = new JLabel();
@@ -65,15 +75,7 @@ public class QuizGUI{
 		label.setVisible(true);
 		return label;
 	}
-	public JButton initializeButton(JButton button, int y, String text) { //creates buttons to choose an answer option
-		button = new JButton();
-		button.setFont(new Font("MV Boli", Font.BOLD, 35));
-		button.setBounds(0, (270 + (130 * y)), 100, 100);
-		button.setText(text);
-		button.addActionListener((ActionListener) this);
-		frame.add(button);
-		return button;
-	}
+
 	public JLabel initializeLabel(JLabel label, int y) { //creates labels to display answer options
 		label = new JLabel();
 		label.setBounds(125, (270 + (y * 130)), 1600, 100);
@@ -88,7 +90,7 @@ public class QuizGUI{
 		txtfield.setBounds(0,pos_y,1600,100);
 		txtfield.setBackground(new Color(25,25,25));
 		txtfield.setForeground(new Color(37,49,220));
-		txtfield.setFont(new Font("Ink Free", Font.PLAIN,30));
+		txtfield.setFont(new Font("Garamond", Font.PLAIN,30));
 		txtfield.setBorder(BorderFactory.createBevelBorder(1));
 		txtfield.setHorizontalAlignment(JTextField.CENTER);
 		txtfield.setEditable(false);
@@ -133,6 +135,15 @@ public class QuizGUI{
 			optionButtons[i] = initializeButton(optionButtons[i], i, letters[i]);
 			optionLabels[i] = initializeLabel(optionLabels[i], i);
 		}
+
+		restartButton.setBounds(1350, 100, 200, 100);
+		restartButton.setFont(new Font("Garamond",Font.BOLD,25));
+		restartButton.setBackground(new Color(194,215,211));
+		restartButton.setForeground(new Color(37,49,220));
+		restartButton.setText("Play again");
+		restartButton.setEnabled(true);
+		restartButton.setVisible(false);
+		frame.add(restartButton);
 
 		//Leaderboard is created
 		leaderBoardSign = buildStatField(225);
@@ -191,7 +202,7 @@ public class QuizGUI{
 		textarea.setVisible(true);
 
 }
-
+		//methods for different scenarios in the quiz
 		public void showDifficultyButtons(boolean vis) { //visibility difficulty buttons and labels
 			for (int i = 0; i < 5; i++) {
 				difficultyButtons[i].setVisible(vis);
@@ -220,4 +231,43 @@ public class QuizGUI{
 				optionLabels[i].setVisible(vis);
 			}
 		}
+
+		public void startQuizSettings() {
+			number_right.setVisible(false);
+			average.setVisible(false);
+			standardDeviation.setVisible(false);
+			percentage.setVisible(false);
+			leaderBoardSign.setVisible(false);
+			for (int i = 0; i < 4; i++) {
+				leaderBoardFields[i].setVisible(false);
+			}
+			restartButton.setVisible(false);
+			restartButton.setEnabled(false);
+			showDifficultyButtons(true);
+			enableDifficultyButtons(true);
+			textfield.setText("Welcome to ISE Quiz :)"); //Heading 1
+			textarea.setText("Select difficulty"); //Heading 2
+			textarea.setFont(new Font("MV Boli",Font.PLAIN,25));
+		}
+		 public void multipleChoiceQuestionButtons() {
+			 optionButtons[0].setVisible(true);
+			 optionButtons[3].setVisible(true);
+			 optionButtons[0].setEnabled(true);
+			 optionButtons[3].setEnabled(true);
+			 optionLabels[0].setVisible(true);
+			 optionLabels[3].setVisible(true);
+			 optionButtons[1].setText("B");
+			 optionButtons[2].setText("C");
+		 }
+
+		 public void trueOrFalseQuestionButtons() {
+			 optionButtons[0].setVisible(false);
+			 optionButtons[3].setVisible(false);
+			 optionButtons[0].setEnabled(false);
+			 optionButtons[3].setEnabled(false);
+			 optionLabels[0].setVisible(false);
+			 optionLabels[3].setVisible(false);
+			 optionButtons[1].setText("T");
+			 optionButtons[2].setText("F");
+		 }
 }

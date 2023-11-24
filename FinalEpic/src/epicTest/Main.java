@@ -12,7 +12,10 @@ public class Main {
 
 		Logon login = new Logon();
 		login.chooseLoginMethod(); //login method is chosen
-		
+
+		Logon userAccount = login;
+		Logon.setUser(userAccount);
+
 		Quiz quiz = new Quiz();
 		quiz.run(login); //quiz is ran
 		

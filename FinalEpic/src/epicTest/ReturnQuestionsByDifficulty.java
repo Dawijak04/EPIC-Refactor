@@ -44,9 +44,8 @@ public class ReturnQuestionsByDifficulty {
                 int correctOption;
                 Difficulty difficulty = null;
                 Question newQuestion = null;
-
                 // Assuming the CSV format follows: Question,Option1,Option2,Option3,Option4,CorrectOption,Difficulty
-                if (line.length == 7) {
+                if (line.length == 7) { //Multiple choice questions
                     question = line[0];
                     option1 = line[1];
                     option2 = line[2];
@@ -57,7 +56,7 @@ public class ReturnQuestionsByDifficulty {
                     newQuestion = new Question(question, option1, option2, option3, option4, correctOption, difficulty); //question is created as an object
 
                 //Assuming the CSV format follows: Question, CorrectOption, Difficulty
-                } else if (line.length == 3) {
+                } else if (line.length == 3) { //True/false questions
                     question = line[0];
                     correctOption = Integer.parseInt(line[1]);
                     difficulty = Difficulty.valueOf(line[2]);
@@ -73,7 +72,6 @@ public class ReturnQuestionsByDifficulty {
         } catch (IOException | CsvException e) {
             e.printStackTrace();
         }
-
         return questionList;
     }
 }

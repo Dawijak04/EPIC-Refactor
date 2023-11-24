@@ -3,6 +3,7 @@
 "What is a BDD?","A specific part of an algorithm that allows us to prove its correctness","A language used to define grammar rules","An endless recursion problem inside the definition of a syntax","A data structure that represents a boolean function",4,Easy
 "Which of those is NOT a subset of {x ∈ N|√x ∉ N}?","S = {3,2,8}","S = {32, 128}","S = {4, 8, 64}","S = {Ø}",3,Easy
 "What is the equivalent of the decimal number 357 in base 2?",110001011,101100101,110101111,101101011,2,Easy
+"What does BNF stand for?","Brand New Function","Brendan Nor Form","Backur Naur Format","Bring Nine Forward",3,Easy
 "What does it mean if two algorithms are semantically the same?","Code is identical","Code is similar","Stored in the same location","Output is the same",4,Medium
 "What is the Von Neumann Bottleneck?","CPU is idle","CPU overheats","Insufficient storage","ALU doesn't cooperate with CU",1,Medium
 "What is tautology?","Compound proposition that is always false","Compound proposition that is always true","Undefined variable","Error in a truth table",2,Medium
