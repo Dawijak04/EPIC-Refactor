@@ -59,8 +59,6 @@ public class Account {
 	 * @return The Account object corresponding to the file
 	 */
 	public static Account fromFile(File accountFile) {
-
-		
 		try {
 			Scanner fileReader = new Scanner(accountFile);
 			String formattedUsername = FileManager.clearFileExtension(accountFile.getName(), 3);
@@ -126,13 +124,13 @@ public class Account {
 	
 	public String getAccountPath() {
 		return Utilities.ACCOUNTS_PATH + this.getUsername() + ".acc";
-	}
+	} //getter for account path
 	
 	public boolean isGuest() {
 		return this.getPassword().length() == 0;
-	}
+	} //checks if user has account or is logged in as guest
 	
-	public void updateScore(double newEntry) {
+	public void updateScore(double newEntry) { //if the user is not a guest, the data from the users current quiz is stored in their account
 		this.allScoresAchieved.add(newEntry);
 		if (!this.isGuest())
 			FileManager.writeFile(this.getAccountPath(), String.format(";%s", newEntry), true);

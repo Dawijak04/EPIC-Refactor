@@ -17,18 +17,15 @@ public class Logon {
 	private Account loggedAccount;
 	
 	private static String CHOOSE_LOGIN_REGEX = Utilities.generateSimpleRegex("123");
-	
-	
-	/**
-	 * Initialises login by reading the account files at the specified path.<br>
-	 * By default path is ./data/accounts.
-	 * @param accountsPath i.e. the path of the directory where the account files are located
-	 */
-	public Logon(String accountsPath) {
-		// TODO Auto-generated constructor stub
-		this.accountsPath = accountsPath;
-		this.readAccounts();
+	private static Logon user;
+
+	public static void setUser(Logon Account) {
+		user = Account;
 	}
+	public static Logon getUser() {
+		return user;
+	}
+
 	
 	/**
 	 * Initialises login by reading the account files at the specified path.<br>
@@ -43,7 +40,7 @@ public class Logon {
 		
 	}
 	
-	public double[] getSortedHighScores() {
+	public double[] getSortedHighScores() { //goes through accounts to find the highest existing scores
 		this.readAccounts();
 		double[] highestScores = new double[this.allAccounts.length];
 		

@@ -2,10 +2,11 @@ package epicTest;
 
 
 //Imports:
-//GUI
+//Action Listeners
 import java.awt.event.*;   
 import java.awt.*;
 import java.awt.event.ActionListener;
+//Used for random number generate
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -13,84 +14,61 @@ import java.util.Set;
 
 public class Quiz extends QuizGUI implements ActionListener {
 
-	java.util.List<Question> questionBank;
+	//List of questions
+	private java.util.List<Question> questionBank;
 
-
-
+	//Accounts data
 	private Logon accountsData;
 	private Account loggedAccount;
+
+	//Timer
 	private CustomTimer gameTimer = new CustomTimer();
-	// END
+
 
 
 
 
 	//Initialisation of variables
-	int answer;
-	int index;
-	int randIndex;
-	int incDifIndex;
-	int score = 0;
-	int result;
-	int mode;
-	int numberOfQuestions = 6;
-	Random rand = new Random();
-	Set<Integer> usedNumbers = new HashSet<>();
+	private int answer; //user input answer
+	private int index; //index of question out of 6
+	private int randIndex; //random number used for picking a question
+	private int incDifIndex; //used for increasing difficulty mode.Switches difficulties once 2 questions of one more are asked
+	private int score = 0; //score
+	private int result; //used for calculating percentage of score
+	private int mode; //used for the program to recognize if increasing difficulty mode is activated
+	private int numberOfQuestions = 6; //limit of questions asked
+
+	//Used for random number generator
+	private Random rand = new Random();
+	private Set<Integer> usedNumbers = new HashSet<>();
 
 
 
 
 
 
-
+	//application is run
 	public void run(Logon accountsData) {
-
-
-		// Author : Victor - Linking login and user accounts
+		//appropriate account is found
 		this.accountsData = accountsData;
-		this.loggedAccount = this.accountsData.getLoggedAccount();
-		// END
+		loggedAccount = this.accountsData.getLoggedAccount();
 
-
-		//End of quiz results
-
-
-		//End of quiz results
-		Color paleGreen = new Color(194, 215, 211);
-		Color darkBlue = new Color(37, 49, 220);
-		Font statsFont = new Font("Garamond",Font.BOLD,25);
-		//Score
-
-		showDifficultyButtons(true);
-		// Author Victor - Stats/Leaderboards GUI
-//wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-
-
-
-//wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-
-
+		showDifficultyButtons(true);//difficulty buttons are displayed
+		index = 0;
+		score = 0;
+		incDifIndex = 0;
+		mode = 0;
+		result = 0;
+		usedNumbers.clear();
 
 
 		//Button 1/Easy
 		difficultyButtons[0].addActionListener(new ActionListener() { //Takes User input
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				//questions = bank.getQuestions(1); //Assigns easy questions
-//				//potAnswers = bank.getPotAnswers(1); //Assigns easy Potential Answers
-//				//answers = bank.getAnswers(1); //Assigns easy answers
-//
-//				QuestionReader.fileReading(Difficulty.Easy);
-//				java.util.List<Question> QuestionsBank = QuestionReader.getQuestionBank();
-//				System.out.println(QuestionsBank.get(3));
-
-				questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.Easy);
-				//System.out.println(questionBank.get(3).getAnswer1());
-
-				setLabelColour(25, 255, 0);
+				questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.Easy); //easy questions are assigned to the question list
+				setLabelColour(25, 255, 0); //answer labels are set to green
 				nextQuestion(); //Method is run, question appears
-
-
 			}
 		});
 
@@ -98,12 +76,8 @@ public class Quiz extends QuizGUI implements ActionListener {
 		difficultyButtons[1].addActionListener(new ActionListener() { //Takes user input
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//questions = bank.getQuestions(2);
-				//potAnswers = bank.getPotAnswers(2);
-				//answers = bank.getAnswers(2);
-
-				questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.Medium);
-				setLabelColour(255, 240, 20);
+				questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.Medium); //medium questions are assigned to the question list
+				setLabelColour(255, 240, 20); //answer labels are set to yellow
 				nextQuestion(); //Method is run, question appears
 			}
 		});
@@ -112,12 +86,8 @@ public class Quiz extends QuizGUI implements ActionListener {
 		difficultyButtons[2].addActionListener(new ActionListener() { //Takes user input
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//questions = bank.getQuestions(3);
-				//potAnswers = bank.getPotAnswers(3);
-				//answers = bank.getAnswers(3);
-
-				questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.Hard);
-				setLabelColour(255, 44, 20);
+				questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.Hard); //hard questions are assigned to the question list
+				setLabelColour(255, 44, 20); //answer labels are set to red
 				nextQuestion(); //Method is run, question appears
 			}
 		});
@@ -126,8 +96,8 @@ public class Quiz extends QuizGUI implements ActionListener {
 		difficultyButtons[3].addActionListener(new ActionListener() { //Takes user input
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.All);
-				setLabelColour(20, 255, 240);
+				questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.All); //all questions are assigned to the question list
+				setLabelColour(20, 255, 240); //answer labels are set to cyan
 				nextQuestion(); //Method is run, question appears
 
 			}
@@ -138,22 +108,13 @@ public class Quiz extends QuizGUI implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mode = 5; //Assigns mode 5
-				//This mode begins with easy mode
-
-				//questions = bank.getQuestions(mode);
-				//potAnswers = bank.getPotAnswers(mode);
-				//answers = bank.getAnswers(mode);
-				questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.Easy);
-
-				setLabelColour(255, 169, 20);
+				questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.Easy); //Starts off with the easy questions and changes progressively
+				setLabelColour(255, 169, 20); //answer labels are set to orange
 				nextQuestion(); //Method is run, question appears
 			}
 		});
-
-
-
 	}
-
+//Generates a random number within the range of questions without repeating it
 	public int randGenerate() {
 		usedNumbers.add(100); //Used to begin while loop
 		int localRand = 100; //Used to begin while loop
@@ -166,10 +127,10 @@ public class Quiz extends QuizGUI implements ActionListener {
 	}
 
 	public void nextQuestion() {
-		enableDifficultyButtons(false);
-		showDifficultyButtons(false);
-		enableOptionButtons(true);
-		showOptionButtons(true);
+		enableDifficultyButtons(false); //difficulty buttons are disabled
+		showDifficultyButtons(false); //difficulty buttons are hidden
+		enableOptionButtons(true); //option buttons are enabled
+		showOptionButtons(true); //option buttons are shown
 
 
 		if (index >= numberOfQuestions) { //If end of quiz
@@ -179,33 +140,16 @@ public class Quiz extends QuizGUI implements ActionListener {
 			//Increasing difficulty mode
 			if (mode == 5) {
 				if (incDifIndex == 2) { //Once 2 questions from easy category are asked, code moves to medium category of questions
-					//questions = bank.getQuestions(2);
-					//potAnswers = bank.getPotAnswers(2);
-					//answers = bank.getAnswers(2);
 					questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.Medium);
 				}
 				if (incDifIndex == 4) { //Once 2 questions from medium category are asked, code moves to hard category of questions
-					//questions = bank.getQuestions(3);
-					//potAnswers = bank.getPotAnswers(3);
-					//answers = bank.getAnswers(3);
 					questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.Hard);
-
-
-
-
 				}
 				incDifIndex++; //Increment Increasing difficulty index
 
 			}
 
-
 			randIndex = randGenerate(); //random number is generated and assigned
-			//System.out.println(questionBank.get(randIndex).getType());
-			//System.out.println(questionBank.get(randIndex).getDifficulty());
-			//System.out.println(questionBank.get(randIndex).getDifficulty());
-
-			//Buttons and labels for modes are hidden
-
 
 			//Buttons for questions are shown
 			showOptionButtons(true);
@@ -214,62 +158,38 @@ public class Quiz extends QuizGUI implements ActionListener {
 			textfield.setText("Questions " + (index + 1)); //Question number is displayed
 			textarea.setText(questionBank.get(randIndex).getQuestion()); //question is displayed
 
-
 			if (questionBank.get(randIndex).getType() == QuestionType.TrueOrFalse) {
 				optionLabels[1].setText(questionBank.get(randIndex).getAnswer1());
 				optionLabels[2].setText(questionBank.get(randIndex).getAnswer2());
-				optionButtons[0].setVisible(false);
-				optionButtons[3].setVisible(false);
-				optionButtons[0].setEnabled(false);
-				optionButtons[3].setEnabled(false);
-				optionLabels[0].setVisible(false);
-				optionLabels[3].setVisible(false);
+				trueOrFalseQuestionButtons();
 			} else if (questionBank.get(randIndex).getType() == QuestionType.MultipleChoice) {
 				optionLabels[0].setText(questionBank.get(randIndex).getAnswer1());
 				optionLabels[1].setText(questionBank.get(randIndex).getAnswer2());
 				optionLabels[2].setText(questionBank.get(randIndex).getAnswer3());
 				optionLabels[3].setText(questionBank.get(randIndex).getAnswer4());
-				optionButtons[0].setVisible(true);
-				optionButtons[3].setVisible(true);
-				optionButtons[0].setEnabled(true);
-				optionButtons[3].setEnabled(true);
-				optionLabels[0].setVisible(true);
-				optionLabels[3].setVisible(true);
-
-
+				multipleChoiceQuestionButtons();
 			}
-
 	}
-
 }
 
 
-
-
-
-	/**
-	 * Calculates the amount of points obtained when answering correctly a question based on the time spent to answer and on the question's difficulty.
-	 * @return The amount of points obtained
-	 *
-	 * Author: Victor
-	 */ //channge get difficukty function
+	//calculates the points a user gets for a specific question by taking into account the time spent on the question, the difficulty and users input
 	public int calculateDetailedScore() {
-		Difficulty difficulty = questionBank.get(randIndex).getDifficulty();
+		Difficulty difficulty = questionBank.get(randIndex).getDifficulty(); //gets the difficulty of the current question
 		int difficultyModifier = 1000;
-		int timeSpentOnQuestion = this.gameTimer.getTimeSeconds();
+		int timeSpentOnQuestion = gameTimer.getTimeSeconds(); //time spent on question
 
 		if (difficulty == Difficulty.Medium) {
-			difficultyModifier /= 2;
+			difficultyModifier /= 2; //points are divided by 2 if in medium mode
 		}
 		else if (difficulty == Difficulty.Easy) {
-			difficultyModifier /= 4;
+			difficultyModifier /= 4; //points are divided by 4 if in hard mode
 		}
-		return (int) (difficultyModifier * Math.pow(0.9, timeSpentOnQuestion));
+		return (int) (difficultyModifier * Math.pow(0.9, timeSpentOnQuestion)); //returns points for that question
 	}
 
-	public void actionPerformed(ActionEvent e) { ///////////////////////////////////////////////////////////////////////
-		enableOptionButtons(false);
-
+	public void actionPerformed(ActionEvent e) {
+		enableOptionButtons(false); //once pressed, option buttons are disabled
 		//Converting user input (via buttons) into an integer, stored in the variable "answer"
 		if(e.getSource()==optionButtons[0]) {
 			answer = 1;
@@ -282,23 +202,18 @@ public class Quiz extends QuizGUI implements ActionListener {
 		}
 		if(e.getSource()==optionButtons[3]) {
 			answer = 4;
-
 		}
 		if(questionBank.get(randIndex).getCorrectAnswer() == answer) { //If correct answer
 			score++; //Increment score
-			detailedScore += this.calculateDetailedScore();
-			//System.out.println("Correct");
+			detailedScore += calculateDetailedScore();
 		}
-		//else System.out.println("Incorrect");
-		index++;
+		index++; //index is incremented
 		nextQuestion(); //Correct answer is indicated
 	}
 
-
-
 	public void results() {
-		enableOptionButtons(false);
-		showOptionButtons(false);
+		enableOptionButtons(false); //option buttons are disabled
+		showOptionButtons(false); //option buttons are hidden
 
 		result = (int)((score/(double)6)*100); //Result is calculated into a percentage
 
@@ -306,41 +221,32 @@ public class Quiz extends QuizGUI implements ActionListener {
 		textarea.setText("Thank you for playing :)"); //Heading 2 displays "Thank you for playing :)"
 		textarea.setFont(new Font("Lucida Handwriting",Font.PLAIN,50));
 
-		number_right.setText("Correct answers: " + score + "/6"); //Score out of 6 is displayed
-		percentage.setText("Percentage ratio: " + result + "%"); //Percentage result is displayed
-
-
 		frame.add(number_right); //Score is added to frame
 		frame.add(percentage); //Percentage is added to frame
-		frame.add(average);
-		frame.add(standardDeviation);
+		frame.add(average); //average is added to frame
+		frame.add(standardDeviation); //standard deviation is added to frame
 
 
-
-
-		/// Author: Victor
-		if (!this.loggedAccount.getUsername().equals("guest")) {
-			this.loggedAccount.updateScore(detailedScore);
+		if (!loggedAccount.getUsername().equals("guest")) { //if user is logged into an account
+			loggedAccount.updateScore(detailedScore); //score is saved into their accounts file
 		}
 
+		buildStats(); //stat data is set to GUI components to be displayed for the user
+		leaderBoardSign.setVisible(true); //Leaderboard sign is shown
+		buildLeaderBoards(); //podium is set
 
+		detailedScore = 0;
 
-		this.buildStats();
-		this.leaderBoardSign.setVisible(true);
-		this.buildLeaderBoards();
-
-		this.detailedScore = 0;
+		restartButton.setVisible(true);
+		restartButton.setEnabled(true);
+		restartButton.addActionListener(new ActionListener() { //Takes user input
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				startQuizSettings();
+				run(Logon.getUser());
+			}
+		});
 	}
-
-
-	////////////////////////////////////////////////////////////////////////////////////////////////
-
-	// Building the leaderboards / stats interface - Victor
-
-	// Building the leaderboards / stats interface - Victor
-
-
-
 
 	/**
 	 * Builds the stats related GUI elements
@@ -350,9 +256,9 @@ public class Quiz extends QuizGUI implements ActionListener {
 		number_right.setVisible(true);
 		percentage.setText("Percentage ratio: " + result + "%"); //Percentage result is displayed
 		percentage.setVisible(true);
-		average.setText(String.format("Your average score: %s", this.loggedAccount.getMeanScore()));
+		average.setText(String.format("Your average score: %s", loggedAccount.getMeanScore())); //Average score of account is displayed (Shows null if logged in as guest)
 		average.setVisible(true);
-		standardDeviation.setText(String.format("Your score's deviation: %s", this.loggedAccount.getStandardDeviationScore()));
+		standardDeviation.setText(String.format("Your score's deviation: %s", loggedAccount.getStandardDeviationScore())); //Standard deviation is displayed (Shows null if logged in as guest)1
 		standardDeviation.setVisible(true);
 	}private int detailedScore = 0;
 
@@ -361,7 +267,7 @@ public class Quiz extends QuizGUI implements ActionListener {
 	 * Builds the GUI elements of the leaderboard
 	 *///sets texts to leaderboard accounts
 	public void buildLeaderBoards() {
-		Account[] podium = this.accountsData.getPodium();
+		Account[] podium = accountsData.getPodium(); //array of podium accounts
 		Account currentAccount;
 		int rank;
 		for (int i=0; i < 4; i++) {
@@ -370,13 +276,13 @@ public class Quiz extends QuizGUI implements ActionListener {
 				rank = i + 1;
 			}
 			else {
-				currentAccount = this.loggedAccount;
-				rank = this.accountsData.getRank(currentAccount);
+				currentAccount = loggedAccount;
+				rank = accountsData.getRank(currentAccount);
 				if (rank <= 3) {
 					break;
 				}
 			}
-			leaderBoardFields[i].setText(String.format("%s. %s: %s", rank, currentAccount.getUsername(), currentAccount.getHighestScore()));
+			leaderBoardFields[i].setText(String.format("%s. %s: %s", rank, currentAccount.getUsername(), currentAccount.getHighestScore())); //account details are set to the leaderboard GUI
 			leaderBoardFields[i].setVisible(true);
 		}
 	}

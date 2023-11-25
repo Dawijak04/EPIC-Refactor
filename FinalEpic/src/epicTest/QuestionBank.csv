@@ -1,8 +1,9 @@
 "What's the name of the no.1 supercomputer in the world?","Cray","Frontier","Kay","Summit",2,Easy
 "Combining two or more propositions using logical expressions is a:","Compound proposition","Propositional variable","Conjunction Variable","Propositional Quantifier",1,Easy
 "What is a BDD?","A specific part of an algorithm that allows us to prove its correctness","A language used to define grammar rules","An endless recursion problem inside the definition of a syntax","A data structure that represents a boolean function",4,Easy
-"Which of those is NOT a subset of {x ∈ N|√x ∉ N}?","(A) S = {3,2,8}","(B) S = {32, 128}","(C) S = {4, 8, 64}","(D) S = {Ø}",3,Easy
+"Which of those is NOT a subset of {x ∈ N|√x ∉ N}?","S = {3,2,8}","S = {32, 128}","S = {4, 8, 64}","S = {Ø}",3,Easy
 "What is the equivalent of the decimal number 357 in base 2?",110001011,101100101,110101111,101101011,2,Easy
+"What does BNF stand for?","Brand New Function","Brendan Nor Form","Backur Naur Format","Bring Nine Forward",3,Easy
 "What does it mean if two algorithms are semantically the same?","Code is identical","Code is similar","Stored in the same location","Output is the same",4,Medium
 "What is the Von Neumann Bottleneck?","CPU is idle","CPU overheats","Insufficient storage","ALU doesn't cooperate with CU",1,Medium
 "What is tautology?","Compound proposition that is always false","Compound proposition that is always true","Undefined variable","Error in a truth table",2,Medium
@@ -12,7 +13,7 @@
 "What equivalence relation is this? (x,y) and (y,z) imply (x,z)","Symmetry","Transitivity","Reflexivity","Asymmetry",2,Hard
 "Which generation of computers were computers based on integrated circuits?",1,2,3,4,3,Hard
 "When is a matrix invertible?","When all the values are the same","When the sum of the values is an even number","When the sum of values is an odd number","When the determinant is not 0",4,Hard
-"Which of these is a partial order relation?","(A) R = {(a,b),(b,b),(a,c),(b,c)}","(B) R = {(b,a),(a,c),(a,a),(b,c),(b,b),(c,c)}","(C) R = {(a,b),(a,a),(a,c),(b,c),(b,b),(c,c)","(D) R = {(a,a),(b,b),(c,c),(a,c),(c,b),(b,a)",3,Hard
+"Which of these is a partial order relation?","R = {(a,b),(b,b),(a,c),(b,c)}","R = {(b,a),(a,c),(a,a),(b,c),(b,b),(c,c)}","R = {(a,b),(a,a),(a,c),(b,c),(b,b),(c,c)","R = {(a,a),(b,b),(c,c),(a,c),(c,b),(b,a)",3,Hard
 "On an island where knights always tell the truth and knaves always lie. An inhabitant declares: 'If I am lying then I am a knight'. Is that inhabitant a knight or knave?","A knight","A knave","Could be both","None of them",1,Hard
 "What are the 9 first bits (i.e. sign and exponent) of decimal number -1212.573 written in IEEE 754 single precision format?",110001001,011000101,111011001,111001101,1,Hard
 "Private attributes can be accessed in other classes by using getter and setter methods",2,Easy

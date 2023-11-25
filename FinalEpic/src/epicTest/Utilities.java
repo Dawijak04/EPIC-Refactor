@@ -14,25 +14,8 @@ public class Utilities {
 	 * Path to the folder containing the account files
 	 */
 	public static final String ACCOUNTS_PATH = "./data/accounts/";
-	
-	//public static void displayAllElements(File[] sourceArray) {
-		//for (File fileElement: sourceArray) {
-			//System.out.println(fileElement.toString());
-		//}
-	//}
-	
-	/**
-	 * Displays the elements of a String[] array in a readable format in the terminal
-	 * @param sourceArray i.e. the array that contains the elements we wish to display
-	 */
-	//public static void displayAllElements(String[] sourceArray) {
-		//for (String stringElement: sourceArray) {
-			//System.out.println(stringElement);
-		//}
-	//}
-	
-	
-	
+
+
 	/**
 	 * Finds the minimum elment, starting at the specified index and ignoring all previous elements, in an array of numbers and returns its index
 	 * @param sourceArray i.e. The array of numbers from which the minimum should be searched
@@ -153,23 +136,7 @@ public class Utilities {
 		Pattern pattern = Pattern.compile(regex);
 		return pattern.matcher(testedString).find();
 	}
-	
-	
-	/**
-	 * Tests if a string is contained in an array
-	 * @param searchedString i.e. the string to search for
-	 * @param targetArray i.e. the array to search in
-	 * @return true if the string was found in the array, false otherwise
-	 */
-	public static boolean searchString(String searchedString, String[] targetArray) {
-		for (String s: targetArray) {
-			if (searchedString.equals(s)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
+
 	
 	/**
 	 * Checks if a password is strong enough.

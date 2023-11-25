@@ -10,23 +10,7 @@ import java.util.Scanner;
  */
 public class InputManager {
 	
-	private static Scanner inputReader = new Scanner(System.in);
-	
-	/**
-	 * 
-	 * @return The integer entered by the user
-	 */
-	public static int readInt() {
-		return inputReader.nextInt();
-	}
-	
-	/**
-	 * 
-	 * @return The double precision number entered by the user
-	 */
-	public static double readDouble() {
-		return inputReader.nextDouble();
-	}
+	private static Scanner inputReader = new Scanner(System.in); //creates new scanner
 	
 	/**
 	 * 
@@ -34,14 +18,14 @@ public class InputManager {
 	 */
 	public static String readString() {
 		return inputReader.next();
-	}
+	} //scans strings
 	
 	/**
 	 *	Closes the opened scanner. It's a good practice.
 	 */
 	public static void end() {
 		inputReader.close();
-	}
+	} //closes scanner
 	
 	
 	/**
@@ -53,7 +37,7 @@ public class InputManager {
 	 * @param simpleRegex i.e. the simple regex that the string format must comply to.
 	 * @return The first string entered by the user that matches with regex pattern.
 	 */
-	public static String readFilteredString(String simpleRegex) {//verifies user input/applies filter
+	public static String readFilteredString(String simpleRegex) {//verifies user input/applies filter. Used when user creates a new account
 		String userInput = readString();
 		
 		while(!Utilities.containsRegexPattern(userInput, simpleRegex)) {
