@@ -68,6 +68,7 @@ public class Quiz extends QuizGUI implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.Easy); //easy questions are assigned to the question list
 				setLabelColour(25, 255, 0); //answer labels are set to green
+				//System.out.println("Mode selected: Easy");
 				nextQuestion(); //Method is run, question appears
 			}
 		});
@@ -78,6 +79,7 @@ public class Quiz extends QuizGUI implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.Medium); //medium questions are assigned to the question list
 				setLabelColour(255, 240, 20); //answer labels are set to yellow
+				//System.out.println("Mode selected: Medium");
 				nextQuestion(); //Method is run, question appears
 			}
 		});
@@ -88,6 +90,7 @@ public class Quiz extends QuizGUI implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.Hard); //hard questions are assigned to the question list
 				setLabelColour(255, 44, 20); //answer labels are set to red
+				//System.out.println("Mode selected: Hard");
 				nextQuestion(); //Method is run, question appears
 			}
 		});
@@ -98,6 +101,7 @@ public class Quiz extends QuizGUI implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.All); //all questions are assigned to the question list
 				setLabelColour(20, 255, 240); //answer labels are set to cyan
+				//System.out.println("Mode selected: Random");
 				nextQuestion(); //Method is run, question appears
 
 			}
@@ -110,6 +114,7 @@ public class Quiz extends QuizGUI implements ActionListener {
 				mode = 5; //Assigns mode 5
 				questionBank = ReturnQuestionsByDifficulty.filterByDiff(Difficulty.Easy); //Starts off with the easy questions and changes progressively
 				setLabelColour(255, 169, 20); //answer labels are set to orange
+				//System.out.println("Mode selected: Increasing Difficulty");
 				nextQuestion(); //Method is run, question appears
 			}
 		});
@@ -157,6 +162,7 @@ public class Quiz extends QuizGUI implements ActionListener {
 
 			textfield.setText("Questions " + (index + 1)); //Question number is displayed
 			textarea.setText(questionBank.get(randIndex).getQuestion()); //question is displayed
+			//System.out.println("Question difficulty: " + questionBank.get(randIndex).getDifficulty() );
 
 			if (questionBank.get(randIndex).getType() == QuestionType.TrueOrFalse) {
 				optionLabels[1].setText(questionBank.get(randIndex).getAnswer1());
@@ -193,20 +199,27 @@ public class Quiz extends QuizGUI implements ActionListener {
 		//Converting user input (via buttons) into an integer, stored in the variable "answer"
 		if(e.getSource()==optionButtons[0]) {
 			answer = 1;
+			//System.out.println("Button 1 pressed");
 		}
 		if(e.getSource()==optionButtons[1]) {
 			answer = 2;
+			//System.out.println("Button 2 pressed");
 		}
 		if(e.getSource()==optionButtons[2]) {
 			answer = 3;
+			//System.out.println("Button 3 pressed");
 		}
 		if(e.getSource()==optionButtons[3]) {
 			answer = 4;
+			//System.out.println("Button 4 pressed");
 		}
 		if(questionBank.get(randIndex).getCorrectAnswer() == answer) { //If correct answer
 			score++; //Increment score
 			detailedScore += calculateDetailedScore();
+			//System.out.println("Answer: correct");
 		}
+		//else {System.out.println("Answer: incorrect");}
+
 		index++; //index is incremented
 		nextQuestion(); //Correct answer is indicated
 	}
@@ -226,6 +239,7 @@ public class Quiz extends QuizGUI implements ActionListener {
 		frame.add(average); //average is added to frame
 		frame.add(standardDeviation); //standard deviation is added to frame
 
+		System.out.println("Account Logged in: " + Logon.getUser());
 
 		if (!loggedAccount.getUsername().equals("guest")) { //if user is logged into an account
 			loggedAccount.updateScore(detailedScore); //score is saved into their accounts file
@@ -242,6 +256,7 @@ public class Quiz extends QuizGUI implements ActionListener {
 		restartButton.addActionListener(new ActionListener() { //Takes user input
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//System.out.println("Restart button pressed");
 				startQuizSettings();
 				run(Logon.getUser());
 			}
