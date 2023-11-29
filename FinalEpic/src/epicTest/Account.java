@@ -1,5 +1,3 @@
-// Author: Pottier Victor 
-// Representing an account with an username, a password and a list of scores obtained
 
 package epicTest;
 
